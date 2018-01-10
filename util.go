@@ -6,8 +6,7 @@ import "C"
 
 import (
 	"unsafe"
-
-	go_debug "github.com/tj/go-debug"
+	"log"
 )
 
 func byteArrayPointer(b []byte) unsafe.Pointer {
@@ -47,7 +46,9 @@ func fixedString(size int) string {
 	return string(b)
 }
 
-var debugFn = go_debug.Debug("govips")
+var debugFn = func(fmt string, values ...interface{}) {
+	log.Printf("[govips] " + fmt, values...)
+}
 
 func debug(fmt string, values ...interface{}) {
 	if len(values) > 0 {
